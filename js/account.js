@@ -255,7 +255,7 @@
     notesHtml += '<div class="note-add"><input id="newNoteText" placeholder="Aaj kya karna/padhna hai? ✍️" class="acc-input"><button class="acc-btn" id="addNote">+ Add</button></div></div>';
 
     box.innerHTML =
-      '<div class="acc-card"><h3>👤 नमस्ते, ' + escapeHtml(me.name) + '</h3>' +
+      '<div class="acc-card"><h3 class="acc-greet">👤 नमस्ते, ' + escapeHtml(me.name) + '</h3>' +
       '<p class="acc-today">📅 आज: <b>' + fmtDate(todayStr()) + '</b></p>' +
       '<div class="streak-row">' +
         '<div class="streak-box"><div class="streak-num">🔥 ' + streak + '</div><div class="streak-label">दिन का स्ट्रीक</div></div>' +

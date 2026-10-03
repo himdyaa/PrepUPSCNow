@@ -210,6 +210,24 @@
     document.getElementById('breakingMarquee').textContent = latest.join('  •  ');
   }
 
+  // ---- UPSC Countdown (CSE Prelims 2027 — 23 May 2027) ----
+  const UPSC_DATE = new Date('2027-05-23T09:30:00+05:30').getTime();
+  const cdEl = document.getElementById('upscCountdown');
+  function updateCountdown(){
+    if(!cdEl) return;
+    const now = Date.now();
+    let diff = UPSC_DATE - now;
+    if(diff <= 0){ cdEl.textContent = '🎉 All the best!'; return; }
+    const days = Math.floor(diff / 86400000);
+    const hrs = Math.floor(diff % 86400000 / 3600000);
+    const mins = Math.floor(diff % 3600000 / 60000);
+    const secs = Math.floor(diff % 60000 / 1000);
+    const pad = function(n){ return String(n).padStart(2, '0'); };
+    cdEl.textContent = days + ' din ' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs);
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
   // Init
   showPostList();
 })();
