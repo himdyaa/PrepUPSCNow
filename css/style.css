@@ -25,10 +25,12 @@ body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:v
 .l-now{color:#fff;font-weight:800}
 .tagline{font-size:13px;opacity:.92;margin-top:2px;letter-spacing:.3px}
 .tag-star{color:var(--yellow);font-size:11px}
-.header-date{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;
+.header-date{display:flex;flex-direction:column;align-items:flex-start;gap:2px;font-size:14px;font-weight:600;
   background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);
-  padding:9px 16px;border-radius:30px;backdrop-filter:blur(4px);
+  padding:8px 16px;border-radius:16px;backdrop-filter:blur(4px);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+.date-label{font-size:11px;font-weight:700;opacity:.85;letter-spacing:.5px}
+.date-value{display:flex;align-items:center;gap:8px}
 .date-icon{font-size:16px}
 
 /* Breaking bar */
@@ -125,7 +127,8 @@ body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:v
   .logo-text h1{font-size:23px}
   .logo-badge{width:50px;height:50px;font-size:25px}
   .tagline{font-size:11.5px}
-  .header-date{font-size:12.5px;padding:7px 13px}
+  .header-date{font-size:12.5px;padding:7px 13px;border-radius:14px}
+  .date-label{font-size:10px}
   .post-article{padding:18px}
   .post-article h1{font-size:21px}
   .post-body{font-size:16px}
