@@ -48,8 +48,7 @@
 
 <div class="breaking-bar">
   <span class="breaking-label">🔴 LIVE</span>
-  <marquee id="breakingMarquee" scrollamount="6">UPSC preparation ke liye daily current affairs, reasoning aur sabhi subjects — ek hi jagah.</marquee>
-</div>
+  <marquee id="breakingMarquee" scrollamount="6">UPSC preparation ke liye daily current affairs, reasoning aur sabhi subjects — ek hi jagah.</marquee></div>
 
 <!-- Donate button -->
 <div class="donate-bar">
@@ -73,7 +72,7 @@
 
 <!-- UPSC Countdown -->
 <div class="countdown-strip">
-  <span class="cd-label">⏳ <b>UPSC CSE Prelims 2027</b> — 23 May 2027</span>
+  <span class="cd-label">⏳ <b id="cdExam">UPSC CSE Prelims 2027</b> — <span id="cdDate">23 May 2027</span></span>
   <span class="cd-timer" id="upscCountdown">-- din --:--:--</span>
 </div>
 
@@ -150,13 +149,13 @@
   <div class="bday-card">
     <button class="bday-close" id="bdayClose" aria-label="Band karo">✕</button>
     <div class="bday-emoji">🎉🎂🎉</div>
-    <div class="bday-upcoming">🔔 UPCOMING BIRTHDAY 🔔</div>
-    <h2 class="bday-title">Advance Happy Birthday!</h2>
-    <div class="bday-name">Jiya Panjwani</div>
-    <div class="bday-tag">⭐ Future IAS ⭐</div>
-    <div class="bday-date">🎈 19 October 2026 🎈</div>
-    <p class="bday-msg">Tumhara sapna zaroor poora hoga!<br>UPSC ki taiyaari me lage raho 💪</p>
-    <button class="bday-btn" id="bdayBtn2"><span class="bday-ptr left">👉</span> 🎊 Celebrate 🎊 <span class="bday-ptr right">👈</span></button>
+    <div class="bday-upcoming" id="ppBadge">🔔 UPCOMING BIRTHDAY 🔔</div>
+    <h2 class="bday-title" id="ppTitle">Advance Happy Birthday!</h2>
+    <div class="bday-name" id="ppName">Jiya Panjwani</div>
+    <div class="bday-tag" id="ppTag">⭐ Future IAS ⭐</div>
+    <div class="bday-date" id="ppDate">🎈 19 October 2026 🎈</div>
+    <p class="bday-msg" id="ppMsg">Tumhara sapna zaroor poora hoga!<br>UPSC ki taiyaari me lage raho 💪</p>
+    <button class="bday-btn" id="bdayBtn2"><span class="bday-ptr left">👉</span> <span id="ppBtn">🎊 Celebrate 🎊</span> <span class="bday-ptr right">👈</span></button>
   </div>
 </div>
 
@@ -262,8 +261,41 @@ canvas.addEventListener('click',function(e){
 // header button
 var hb=document.getElementById('bdayHeaderBtn');
 if(hb)hb.onclick=showPopup;
-// page khulne par popup
-window.addEventListener('load',function(){setTimeout(showPopup,1200)});
+// ===== Server se popup config lao =====
+var POPUP_API='https://script.google.com/macros/s/AKfycbz9xNhcTIZn9BrfCOj1b5VxrI2QC1rEFWdGhUoBFHzCr3wnYyGNuVbhCItWocHArlQv2w/exec';
+function loadPopupConfig(){
+  fetch(POPUP_API+'?popup=1').then(function(r){return r.json()}).then(function(d){
+    if(!d||!d.active)return; // server par popup band hai to kuch mat dikhao
+    if(d.badge)document.getElementById('ppBadge').textContent=d.badge;
+    if(d.title)document.getElementById('ppTitle').textContent=d.title;
+    if(d.name)document.getElementById('ppName').textContent=d.name;
+    var tag=document.getElementById('ppTag');
+    if(d.tag){tag.textContent=d.tag;tag.style.display=''}else{tag.style.display='none'}
+    var dt=document.getElementById('ppDate');
+    if(d.date){dt.textContent=d.date;dt.style.display=''}else{dt.style.display='none'}
+    if(d.message)document.getElementById('ppMsg').innerHTML=d.message;
+    if(d.btn)document.getElementById('ppBtn').textContent=d.btn;
+    if(hb){
+      if(d.headerBtn){hb.textContent=d.headerBtn;hb.style.display=''}
+      else{hb.style.display='none'}
+    }
+    setTimeout(showPopup,1200);
+  }).catch(function(){/* server fail to popup mat dikhao */});
+}
+// page khulne par popup + ticker + countdown
+window.addEventListener('load',function(){
+  loadPopupConfig();
+  // Ticker text server se
+  fetch(POPUP_API+'?ticker=1').then(function(r){return r.json()}).then(function(d){
+    if(d&&d.text)document.getElementById('breakingMarquee').textContent=d.text;
+  }).catch(function(){});
+  // Countdown server se
+  fetch(POPUP_API+'?countdown=1').then(function(r){return r.json()}).then(function(d){
+    if(d&&d.exam)document.getElementById('cdExam').textContent=d.exam;
+    if(d&&d.date)document.getElementById('cdDate').textContent=d.date;
+    if(d&&d.target)window.__cdTarget=d.target;
+  }).catch(function(){});
+});
 })();
 </script>
 </body>
