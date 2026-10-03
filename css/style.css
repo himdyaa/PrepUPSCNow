@@ -263,3 +263,38 @@ body.theme-silver .site-header{background:linear-gradient(135deg,#5a6268,#8a949c
   .post-body{font-size:16px}
   .tab-btn{padding:8px 14px;font-size:14px}
 }
+
+/* ===== 🎂 Birthday Popup — Jiya Panjwani ===== */
+#balloonCanvas{position:fixed;inset:0;z-index:9998;pointer-events:auto;display:none}
+.bday-popup{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .4s;padding:16px}
+.bday-popup.show{opacity:1;pointer-events:auto}
+.bday-card{position:relative;background:linear-gradient(160deg,#fff8e7,#ffe9c4);border:3px solid #ff4d6d;border-radius:22px;
+  max-width:380px;width:100%;padding:34px 24px 28px;text-align:center;
+  box-shadow:0 0 40px rgba(255,77,109,.5),0 20px 60px rgba(0,0,0,.4);
+  animation:bdayPop .5s cubic-bezier(.2,1.6,.4,1)}
+@keyframes bdayPop{0%{transform:scale(.6) rotate(-4deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+.bday-close{position:absolute;top:10px;right:12px;background:#ff4d6d;color:#fff;border:none;width:32px;height:32px;
+  border-radius:50%;font-size:16px;cursor:pointer;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.bday-emoji{font-size:44px;animation:bdayBounce 1s infinite}
+@keyframes bdayBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.bday-title{font-size:30px;font-weight:900;margin:8px 0 2px;
+  background:linear-gradient(90deg,#ff4d6d,#ff8c00,#e6a800,#ff4d6d);background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:bdayShine 3s linear infinite}
+@keyframes bdayShine{to{background-position:200% center}}
+.bday-name{font-size:26px;font-weight:800;color:#7a2d00;margin:4px 0}
+.bday-tag{display:inline-block;background:linear-gradient(135deg,#ffd700,#ffed4e);color:#5a4a00;font-weight:800;
+  padding:6px 18px;border-radius:20px;margin:8px 0;font-size:15px;box-shadow:0 2px 10px rgba(255,200,0,.5)}
+.bday-date{font-size:16px;font-weight:700;color:#c0392b;margin:6px 0}
+.bday-msg{font-size:14px;color:#6b4a1f;line-height:1.6;margin:10px 0 16px}
+.bday-btn{background:linear-gradient(135deg,#ff4d6d,#ff8c00);color:#fff;border:none;font-size:17px;font-weight:800;
+  padding:13px 34px;border-radius:30px;cursor:pointer;box-shadow:0 4px 16px rgba(255,77,109,.5);transition:transform .15s}
+.bday-btn:hover{transform:scale(1.06)}
+.bday-btn:active{transform:scale(.96)}
+/* Header blinking red button */
+.bday-header-btn{background:#fff;color:#d60000;font-weight:800;font-size:14px;padding:10px 18px;border-radius:25px;cursor:pointer;
+  border:3px solid #ff0000;animation:bdayBlink 1s infinite;box-shadow:0 0 12px rgba(255,0,0,.5);white-space:nowrap}
+@keyframes bdayBlink{0%,100%{box-shadow:0 0 6px rgba(255,0,0,.4);border-color:#ff0000}
+  50%{box-shadow:0 0 22px rgba(255,0,0,.95);border-color:#ff6b6b;transform:scale(1.04)}}
+.bday-header-btn:hover{animation-play-state:paused;transform:scale(1.06)}
+@media(max-width:600px){.bday-header-btn{font-size:12px;padding:8px 14px}.bday-title{font-size:25px}.bday-name{font-size:22px}}
