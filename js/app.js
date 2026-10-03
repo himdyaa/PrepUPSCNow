@@ -229,11 +229,12 @@
     if(m && e.target === m) window.closeDonate();
   });
 
-  // ---- UPSC Countdown (CSE Prelims 2027 — 23 May 2027) ----
-  const UPSC_DATE = new Date('2027-05-23T09:30:00+05:30').getTime();
+  // ---- UPSC Countdown (server se date aa sakti hai) ----
+  var UPSC_DATE = new Date('2027-05-23T09:30:00+05:30').getTime();
   const cdEl = document.getElementById('upscCountdown');
   function updateCountdown(){
     if(!cdEl) return;
+    if(window.__cdTarget){ var t = new Date(window.__cdTarget).getTime(); if(!isNaN(t)) UPSC_DATE = t; }
     const now = Date.now();
     let diff = UPSC_DATE - now;
     if(diff <= 0){ cdEl.textContent = '🎉 All the best!'; return; }
