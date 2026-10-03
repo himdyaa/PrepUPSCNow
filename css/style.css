@@ -79,6 +79,30 @@ body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:v
   margin:12px auto;max-width:728px;color:#aaa;font-size:12px}
 .ad-top{margin:0 auto;max-width:100%;border-radius:0;border-left:0;border-right:0}
 
+/* ===== THEME SYSTEM ===== */
+/* Default theme */
+body{--theme-primary:#b30000;--theme-accent:#ff6b00;--theme-bg:#fff;--theme-glow:none}
+
+/* Platinum theme (100 din streak) */
+body.theme-platinum{--theme-primary:#5a6c7d;--theme-accent:#9fb3c8;--theme-bg:#f8fafc;--theme-glow:0 0 20px rgba(159,179,200,.5)}
+body.theme-platinum .site-header{background:linear-gradient(135deg,#4a5a6a,#7a8fa3)}
+body.theme-platinum .countdown-strip{background:linear-gradient(135deg,#e8eef3,#d0dce6);color:#2c3e50}
+
+/* Gold theme (200 din streak) */
+body.theme-gold{--theme-primary:#b8860b;--theme-accent:#ffd700;--theme-bg:#fffdf5;--theme-glow:0 0 25px rgba(255,215,0,.6)}
+body.theme-gold .site-header{background:linear-gradient(135deg,#8b6914,#d4a017)}
+body.theme-gold .countdown-strip{background:linear-gradient(135deg,#fff8dc,#ffe55c);color:#5a4a00}
+
+/* Silver theme (Excel se manual) */
+body.theme-silver{--theme-primary:#6c757d;--theme-accent:#adb5bd;--theme-bg:#f8f9fa;--theme-glow:0 0 15px rgba(173,181,189,.4)}
+body.theme-silver .site-header{background:linear-gradient(135deg,#5a6268,#8a949c)}
+
+/* Theme badge */
+.theme-badge{display:inline-block;padding:4px 12px;border-radius:15px;font-size:12px;font-weight:700;margin-left:8px}
+.theme-platinum .theme-badge{background:linear-gradient(135deg,#9fb3c8,#e8eef3);color:#2c3e50}
+.theme-gold .theme-badge{background:linear-gradient(135deg,#ffd700,#ffed4e);color:#5a4a00}
+.theme-silver .theme-badge{background:linear-gradient(135deg,#adb5bd,#dee2e6);color:#343a40}
+
 /* Date filter pills */
 .date-filter{display:flex;overflow-x:auto;gap:8px;padding:4px 2px 14px;-webkit-overflow-scrolling:touch}
 .date-filter::-webkit-scrollbar{height:4px}
