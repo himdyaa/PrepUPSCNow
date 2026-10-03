@@ -92,10 +92,11 @@ body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:v
 .quiz-opts li{padding:6px 0}
 .quiz-ans{color:#0a7d2c;font-weight:700;margin-top:8px}
 
-.header-dl-btn{background:#ffd700;color:#7a0000;border:0;font-weight:800;font-size:13px;
-  padding:10px 16px;border-radius:30px;cursor:pointer;white-space:nowrap;
-  box-shadow:0 2px 8px rgba(0,0,0,.25);transition:transform .15s}
-.header-dl-btn:hover{transform:scale(1.05);background:#ffdf33}
+.header-dl-btn{background:#ffd700;color:#7a0000;border:0;font-weight:800;font-size:15px;
+  padding:12px 22px;border-radius:30px;cursor:pointer;white-space:nowrap;
+  box-shadow:0 3px 10px rgba(0,0,0,.3);transition:transform .15s;
+  border:2px solid #fff3}
+.header-dl-btn:hover{transform:scale(1.06);background:#ffdf33}
 .header-dl-btn small{font-weight:600}
 
 /* Account Modal Popup */
@@ -167,7 +168,7 @@ body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:v
   .tagline{font-size:11.5px}
   .header-date{font-size:12.5px;padding:7px 13px;border-radius:14px}
   .date-label{font-size:10px}
-  .header-dl-btn{font-size:11.5px;padding:8px 12px}
+  .header-dl-btn{font-size:13px;padding:10px 16px}
   .post-article{padding:18px}
   .post-article h1{font-size:21px}
   .post-body{font-size:16px}
