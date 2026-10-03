@@ -50,11 +50,19 @@
     </article>
   </section>
 
-  <!-- Account view -->
+  <!-- Account view (purana tab view — ab modal use hota hai) -->
   <section id="accountView" class="hidden">
-    <div id="accountBox"></div>
+    <div id="accountBoxOld"></div>
   </section>
 </main>
+
+<!-- Account Login Popup Modal -->
+<div class="modal-overlay hidden" id="accountModal">
+  <div class="modal-box">
+    <button class="modal-close" id="accountModalClose">✕</button>
+    <div id="accountBox"></div>
+  </div>
+</div>
 
 <footer class="site-footer">
   <p>© PrepUPSCNow • All Rights Reserved</p>
