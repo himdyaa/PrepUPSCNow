@@ -154,36 +154,46 @@
         msg('वापस स्वागत है, ' + u[name].name + '! 🎉', true);
         setTimeout(function(){ if(window.PUN_closeAccountModal) window.PUN_closeAccountModal(); }, 900);
       };
-      // ---- FORGOT PASSWORD (security question: favourite person) ----
+      // ---- FORGOT PASSWORD (2-step: pehle pehchan verify, phir naya password) ----
       document.getElementById('forgotLink').onclick = function(){
+        // STEP 1: pehchan verify
         box.innerHTML =
-          '<div class="acc-card"><h3>🔑 पासवर्ड रीसेट</h3>' +
-          '<p class="acc-note">सुरक्षा प्रश्न का उत्तर दो</p>' +
+          '<div class="acc-card"><h3>🔑 पासवर्ड भूल गए?</h3>' +
+          '<p class="acc-note">Koi baat nahi! Pehle apni pehchan verify karo</p>' +
           '<input id="fpName" placeholder="Username (पूरा नाम) *" class="acc-input">' +
           '<p class="acc-note" style="margin:4px 0 8px">🔒 <b>आपके पसंदीदा व्यक्ति का नाम क्या है?</b></p>' +
           '<input id="fpFav" placeholder="पसंदीदा व्यक्ति का नाम *" class="acc-input">' +
-          '<input id="fpNew" type="password" inputmode="numeric" maxlength="4" placeholder="नया 4 अंकों का पासवर्ड *" class="acc-input">' +
-          '<button class="acc-btn" id="doReset">पासवर्ड बदलो →</button>' +
+          '<button class="acc-btn" id="doVerify">Verify Karo →</button>' +
           '<button class="acc-link" id="fpBack" style="margin-top:10px">← वापस</button>' +
           '<p class="acc-msg" id="accMsg"></p></div>';
         const msg2 = function(t, ok){ const m=document.getElementById('accMsg'); m.textContent=t; m.style.color = ok ? '#0a7d2c' : '#cc0000'; };
         document.getElementById('fpBack').onclick = renderAccount;
-        document.getElementById('doReset').onclick = function(){
+        document.getElementById('doVerify').onclick = function(){
           const name = document.getElementById('fpName').value.trim().toLowerCase();
           const fav = document.getElementById('fpFav').value.trim().toLowerCase();
-          const npass = document.getElementById('fpNew').value.trim();
           const u = getUsers();
           if(!u[name]){ msg2('इस नाम से कोई account नहीं मिला'); return; }
           if(u[name].security){
             if(u[name].security !== fav){ msg2('सुरक्षा प्रश्न का उत्तर गलत है'); return; }
           } else {
-            // purane accounts (security question nahi tha) — age+village fallback
-            msg2('पुराना account है — नया account बनाओ या age+village se verify karo'); return;
+            msg2('पुराना account है — नया account बनाओ'); return;
           }
-          if(!/^\d{4}$/.test(npass)){ msg2('नया पासवर्ड ठीक 4 अंक का होना चाहिए'); return; }
-          u[name].pass = npass; saveUsers(u); setSession(name);
-          msg2('पासवर्ड बदल गया! ✅', true);
-          setTimeout(function(){ if(window.PUN_closeAccountModal) window.PUN_closeAccountModal(); }, 1000);
+          // STEP 2: pehchan OK — ab naya password banao
+          box.innerHTML =
+            '<div class="acc-card"><h3>✅ Pehchan Verify Ho Gayi!</h3>' +
+            '<p class="acc-note">Ab apna <b>naya</b> 4-digit password banao</p>' +
+            '<input id="fpNew" type="password" inputmode="numeric" maxlength="4" placeholder="Naya 4 अंकों का पासवर्ड *" class="acc-input">' +
+            '<button class="acc-btn" id="doReset">Login Karo →</button>' +
+            '<p class="acc-msg" id="accMsg"></p></div>';
+          const msg3 = function(t, ok){ const m=document.getElementById('accMsg'); m.textContent=t; m.style.color = ok ? '#0a7d2c' : '#cc0000'; };
+          document.getElementById('doReset').onclick = function(){
+            const npass = document.getElementById('fpNew').value.trim();
+            if(!/^\d{4}$/.test(npass)){ msg3('4 अंक का password डालो (sirf numbers)'); return; }
+            const uu = getUsers();
+            uu[name].pass = npass; saveUsers(uu); setSession(name);
+            msg3('Ho gaya! 🎉', true);
+            setTimeout(function(){ if(window.PUN_closeAccountModal) window.PUN_closeAccountModal(); }, 1000);
+          };
         };
       };
       return;
