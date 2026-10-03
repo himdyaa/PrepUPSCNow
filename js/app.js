@@ -31,7 +31,55 @@
     tabsNav.appendChild(btn);
   });
 
-  // ---- Account Modal ----
+  // ---- PDF Download ----
+  const pdfModal = document.getElementById('pdfModal');
+  const pdfDateSelect = document.getElementById('pdfDateSelect');
+  const pdfMsg = document.getElementById('pdfMsg');
+  let pdfIndex = [];
+
+  function openPdfModal(){
+    pdfModal.classList.remove('hidden');
+    pdfMsg.textContent = '';
+    if(pdfIndex.length === 0){
+      pdfMsg.textContent = 'PDF list load ho rahi hai...';
+      fetch('pdfs/index.json').then(function(r){ return r.json(); }).then(function(idx){
+        pdfIndex = idx;
+        fillPdfDates();
+      }).catch(function(){ pdfMsg.textContent = 'PDF list nahi mili — baad me try karo'; });
+    } else {
+      fillPdfDates();
+    }
+  }
+  function fillPdfDates(){
+    pdfDateSelect.innerHTML = '';
+    pdfIndex.forEach(function(e){
+      const o = document.createElement('option');
+      o.value = e.date;
+      o.textContent = e.label + ' (' + e.posts + ' posts)';
+      pdfDateSelect.appendChild(o);
+    });
+    pdfMsg.textContent = pdfIndex.length ? '' : 'Abhi koi PDF available nahi';
+  }
+  function closePdfModal(){ pdfModal.classList.add('hidden'); }
+  document.getElementById('headerDlBtn').addEventListener('click', openPdfModal);
+  document.getElementById('pdfModalClose').addEventListener('click', closePdfModal);
+  pdfModal.addEventListener('click', function(e){ if(e.target === pdfModal) closePdfModal(); });
+  function downloadPdf(kind){
+    const d = pdfDateSelect.value;
+    if(!d){ pdfMsg.textContent = 'Pehle taarikh chuno'; return; }
+    const entry = pdfIndex.find(function(e){ return e.date === d; });
+    if(!entry){ pdfMsg.textContent = 'PDF nahi mila'; return; }
+    const file = kind === 'full' ? entry.full : entry.ca;
+    const a = document.createElement('a');
+    a.href = 'pdfs/' + file;
+    a.download = file;
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  document.getElementById('dlFullPdf').addEventListener('click', function(){ downloadPdf('full'); });
+  document.getElementById('dlCaPdf').addEventListener('click', function(){ downloadPdf('ca'); });
   const accountModal = document.getElementById('accountModal');
   function openAccountModal(){
     accountModal.classList.remove('hidden');
@@ -76,10 +124,30 @@
       dates.forEach(function(d){
         fh += '<button class="date-pill' + (activeDate === d ? ' active' : '') + '" data-date="' + escapeHtml(d) + '">🗓️ ' + escapeHtml(d) + '</button>';
       });
+      // Current Affairs me "Download Today's CA" button
+      if(activeCategory === 'current-affairs'){
+        fh += '<button class="date-pill dl-pill" id="dlTodayCa">📥 Download Today\'s Current Affairs</button>';
+      }
       dateFilter.innerHTML = fh;
       dateFilter.style.display = 'flex';
       const pills = dateFilter.querySelectorAll('.date-pill');
       pills.forEach(function(pill){
+        if(pill.id === 'dlTodayCa'){
+          pill.addEventListener('click', function(){
+            fetch('pdfs/index.json').then(function(r){ return r.json(); }).then(function(idx){
+              if(!idx.length){ alert('PDF abhi taiyaar ho raha hai — thodi der me try karo'); return; }
+              const latest = idx[0];
+              const a = document.createElement('a');
+              a.href = 'pdfs/' + latest.ca;
+              a.download = latest.ca;
+              a.target = '_blank';
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            }).catch(function(){ alert('PDF abhi taiyaar ho raha hai — thodi der me try karo'); });
+          });
+          return;
+        }
         pill.addEventListener('click', function(){
           activeDate = pill.getAttribute('data-date');
           showPostList();
@@ -123,6 +191,8 @@
     postListView.classList.add('hidden');
     postView.classList.remove('hidden');
     window.scrollTo({top:0, behavior:'smooth'});
+    // post padha — read count me jodo (target progress ke liye)
+    if(window.PUN_markPostRead) window.PUN_markPostRead(p.id);
   }
 
   backBtn.addEventListener('click', showPostList);
