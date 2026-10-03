@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Popup Admin — PrepUPSCNow</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:sans-serif;background:#141210;color:#f5f0e1;min-height:100vh;padding:16px}
+.wrap{max-width:520px;margin:0 auto}
+h1{text-align:center;font-size:22px;margin:10px 0 4px;color:#ffcf00}
+.sub{text-align:center;color:#a89f81;font-size:13px;margin-bottom:14px}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tab{flex:1;padding:11px 4px;border-radius:10px;border:1px solid #8a6a00;background:#1f1b16;color:#a89f81;
+  font-size:14px;font-weight:700;cursor:pointer;text-align:center}
+.tab.active{background:linear-gradient(135deg,#3a2c00,#8a6a00);color:#ffcf00;border-color:#ffcf00}
+.card{background:#1f1b16;border:1px solid #8a6a00;border-radius:14px;padding:18px;margin-bottom:14px}
+.card h3{color:#ffcf00;font-size:15px;margin-bottom:12px}
+label{display:block;font-size:13px;color:#a89f81;margin:10px 0 4px}
+input[type=text],textarea{width:100%;background:#2a2416;border:1px solid #8a6a00;color:#fff;
+  border-radius:8px;padding:10px;font-size:15px;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+.row{display:flex;align-items:center;gap:10px;margin:12px 0}
+.row input[type=checkbox]{width:20px;height:20px;accent-color:#ffcf00}
+.row span{font-size:15px;font-weight:700}
+.btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:17px;font-weight:800;cursor:pointer;
+  background:linear-gradient(135deg,#e6a800,#ffd700);color:#2a1f00;margin-top:6px}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.5}
+.msg{text-align:center;font-size:14px;margin-top:10px;min-height:20px}
+.msg.ok{color:#51e08c}.msg.err{color:#ff6b6b}
+.hint{font-size:12px;color:#777;text-align:center;margin-top:14px;line-height:1.6}
+.preview{border:2px dashed #8a6a00;border-radius:12px;padding:14px;text-align:center;margin-top:8px}
+.preview .pv-badge{display:inline-block;background:#ff0000;color:#fff;font-size:12px;font-weight:800;
+  padding:4px 12px;border-radius:12px;margin-bottom:6px}
+.preview .pv-title{font-size:20px;font-weight:800;color:#ffcf00}
+.preview .pv-name{font-size:18px;font-weight:700;color:#fff;margin:4px 0}
+#loginCard{text-align:center;padding:30px 18px}
+#loginCard input{text-align:center;font-size:18px;letter-spacing:2px}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎛️ Popup Admin</h1>
+  <p class="sub">PrepUPSCNow — bina code ke popup badlo</p>
+
+  <div class="card" id="loginCard">
+    <h3>🔐 Admin Password</h3>
+    <input type="text" id="adminPass" placeholder="Password likho" autocomplete="off">
+    <button class="btn" id="loginBtn" style="margin-top:12px">Login</button>
+    <p class="msg" id="loginMsg"></p>
+  </div>
+
+  <div id="panel" class="hidden">
+    <div class="tabs">
+      <div class="tab active" data-tab="popup">🎂 Popup</div>
+      <div class="tab" data-tab="ticker">📢 Ticker</div>
+      <div class="tab" data-tab="countdown">⏳ Countdown</div>
+    </div>
+
+    <!-- ===== POPUP TAB ===== -->
+    <div id="tab-popup">
+    <div class="card">
+      <h3>📢 Popup On/Off</h3>
+      <div class="row"><input type="checkbox" id="fActive" checked><span>Popup dikhao (site khulne par)</span></div>
+    </div>
+
+    <div class="card">
+      <h3>✏️ Popup Content</h3>
+      <label>Badge (upar laal patti)</label>
+      <input type="text" id="fBadge" value="🔔 UPCOMING BIRTHDAY 🔔">
+      <label>Title</label>
+      <input type="text" id="fTitle" value="Advance Happy Birthday!">
+      <label>Naam</label>
+      <input type="text" id="fName" value="Jiya Panjwani">
+      <label>Tag (peela badge — khaali chhodo to chhupega)</label>
+      <input type="text" id="fTag" value="⭐ Future IAS ⭐">
+      <label>Date line (khaali chhodo to chhupega)</label>
+      <input type="text" id="fDate" value="🎈 19 October 2026 🎈">
+      <label>Message</label>
+      <textarea id="fMsg">Tumhara sapna zaroor poora hoga!<br>UPSC ki taiyaari me lage raho 💪</textarea>
+      <label>Celebrate button text</label>
+      <input type="text" id="fBtn" value="🎊 Celebrate 🎊">
+      <label>Header button text (khaali chhodo to header button chhupega)</label>
+      <input type="text" id="fHeaderBtn" value="🎂 Upcoming Birthday: Jiya (19 Oct)">
+    </div>
+
+    <div class="card">
+      <h3>👀 Preview</h3>
+      <div class="preview">
+        <div class="pv-badge" id="pvBadge">🔔 UPCOMING BIRTHDAY 🔔</div>
+        <div class="pv-title" id="pvTitle">Advance Happy Birthday!</div>
+        <div class="pv-name" id="pvName">Jiya Panjwani</div>
+      </div>
+    </div>
+
+    <button class="btn" id="saveBtn">💾 Save Popup</button>
+    <p class="msg" id="saveMsg"></p>
+    </div><!-- /tab-popup -->
+
+    <!-- ===== TICKER TAB ===== -->
+    <div id="tab-ticker" class="hidden">
+    <div class="card">
+      <h3>📢 LIVE Ticker Text</h3>
+      <label>Jo text laal LIVE patti me scroll hoga</label>
+      <textarea id="fTicker" style="min-height:90px">UPSC preparation ke liye daily current affairs, reasoning aur sabhi subjects — ek hi jagah.</textarea>
+    </div>
+    <button class="btn" id="saveTickerBtn">💾 Save Ticker</button>
+    <p class="msg" id="saveTickerMsg"></p>
+    </div><!-- /tab-ticker -->
+
+    <!-- ===== COUNTDOWN TAB ===== -->
+    <div id="tab-countdown" class="hidden">
+    <div class="card">
+      <h3>⏳ Countdown Settings</h3>
+      <label>Exam naam</label>
+      <input type="text" id="fExam" value="UPSC CSE Prelims 2027">
+      <label>Date text (dikhega)</label>
+      <input type="text" id="fCdDate" value="23 May 2027">
+      <label>Target date-time (timer isi se chalega)</label>
+      <input type="text" id="fCdTarget" value="2027-05-23T09:30:00+05:30">
+      <p class="hint" style="text-align:left;margin-top:8px">Format: YYYY-MM-DDTHH:MM:SS+05:30<br>Jaise: 2027-05-23T09:30:00+05:30</p>
+    </div>
+    <button class="btn" id="saveCdBtn">💾 Save Countdown</button>
+    <p class="msg" id="saveCdMsg"></p>
+    </div><!-- /tab-countdown -->
+
+    <p class="hint">Save karne ke baad site refresh karne par<br>naya content sabko dikhega ✨</p>
+  </div>
+</div>
+
+<script>
+var API='https://script.google.com/macros/s/AKfycbz9xNhcTIZn9BrfCOj1b5VxrI2QC1rEFWdGhUoBFHzCr3wnYyGNuVbhCItWocHArlQv2w/exec';
+var PASS='';
+// tabs
+document.querySelectorAll('.tab').forEach(function(t){
+  t.onclick=function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
+    t.classList.add('active');
+    ['popup','ticker','countdown'].forEach(function(k){
+      document.getElementById('tab-'+k).classList.toggle('hidden',k!==t.dataset.tab);
+    });
+  };
+});
+document.getElementById('loginBtn').onclick=function(){
+  PASS=document.getElementById('adminPass').value.trim();
+  if(!PASS){document.getElementById('loginMsg').textContent='Password likho!';return}
+  // password check: popup config lao
+  fetch(API+'?popup=1').then(function(r){return r.json()}).then(function(d){
+    document.getElementById('loginCard').classList.add('hidden');
+    document.getElementById('panel').classList.remove('hidden');
+    if(d&&d.active){
+      if(d.badge)document.getElementById('fBadge').value=d.badge;
+      if(d.title)document.getElementById('fTitle').value=d.title;
+      if(d.name)document.getElementById('fName').value=d.name;
+      if(d.tag!==undefined)document.getElementById('fTag').value=d.tag||'';
+      if(d.date!==undefined)document.getElementById('fDate').value=d.date||'';
+      if(d.message)document.getElementById('fMsg').value=d.message;
+      if(d.btn)document.getElementById('fBtn').value=d.btn;
+      if(d.headerBtn!==undefined)document.getElementById('fHeaderBtn').value=d.headerBtn||'';
+    } else {
+      document.getElementById('fActive').checked=false;
+    }
+    updPreview();
+    // ticker + countdown bhi lao
+    fetch(API+'?ticker=1').then(function(r){return r.json()}).then(function(t){
+      if(t&&t.text)document.getElementById('fTicker').value=t.text;
+    }).catch(function(){});
+    fetch(API+'?countdown=1').then(function(r){return r.json()}).then(function(c){
+      if(c&&c.exam)document.getElementById('fExam').value=c.exam;
+      if(c&&c.date)document.getElementById('fCdDate').value=c.date;
+      if(c&&c.target)document.getElementById('fCdTarget').value=c.target;
+    }).catch(function(){});
+  }).catch(function(){
+    document.getElementById('loginMsg').textContent='Server se connect nahi hua!';
+    document.getElementById('loginMsg').className='msg err';
+  });
+};
+function updPreview(){
+  document.getElementById('pvBadge').textContent=document.getElementById('fBadge').value;
+  document.getElementById('pvTitle').textContent=document.getElementById('fTitle').value;
+  document.getElementById('pvName').textContent=document.getElementById('fName').value;
+}
+['fBadge','fTitle','fName'].forEach(function(id){
+  document.getElementById(id).addEventListener('input',updPreview);
+});
+document.getElementById('saveBtn').onclick=function(){
+  var btn=this;btn.disabled=true;
+  var msg=document.getElementById('saveMsg');
+  msg.textContent='Save ho raha hai...';msg.className='msg';
+  fetch(API,{
+    method:'POST',
+    body:JSON.stringify({
+      action:'savePopup',adminPass:PASS,
+      active:document.getElementById('fActive').checked?'yes':'no',
+      badge:document.getElementById('fBadge').value,
+      title:document.getElementById('fTitle').value,
+      name:document.getElementById('fName').value,
+      tag:document.getElementById('fTag').value,
+      date:document.getElementById('fDate').value,
+      message:document.getElementById('fMsg').value,
+      btn:document.getElementById('fBtn').value,
+      headerBtn:document.getElementById('fHeaderBtn').value
+    })
+  }).then(function(r){return r.json()}).then(function(d){
+    btn.disabled=false;
+    if(d&&d.ok){msg.textContent='✅ Save ho gaya!';msg.className='msg ok'}
+    else{msg.textContent='❌ '+(d&&d.error?d.error:'Password galat!');msg.className='msg err'}
+  }).catch(function(){btn.disabled=false;msg.textContent='❌ Server error!';msg.className='msg err'});
+};
+// ===== Ticker save =====
+document.getElementById('saveTickerBtn').onclick=function(){
+  var btn=this;btn.disabled=true;
+  var msg=document.getElementById('saveTickerMsg');
+  msg.textContent='Save ho raha hai...';msg.className='msg';
+  fetch(API,{method:'POST',body:JSON.stringify({
+    action:'saveTicker',adminPass:PASS,
+    text:document.getElementById('fTicker').value
+  })}).then(function(r){return r.json()}).then(function(d){
+    btn.disabled=false;
+    if(d&&d.ok){msg.textContent='✅ Save ho gaya!';msg.className='msg ok'}
+    else{msg.textContent='❌ '+(d&&d.error?d.error:'Password galat!');msg.className='msg err'}
+  }).catch(function(){btn.disabled=false;msg.textContent='❌ Server error!';msg.className='msg err'});
+};
+// ===== Countdown save =====
+document.getElementById('saveCdBtn').onclick=function(){
+  var btn=this;btn.disabled=true;
+  var msg=document.getElementById('saveCdMsg');
+  msg.textContent='Save ho raha hai...';msg.className='msg';
+  fetch(API,{method:'POST',body:JSON.stringify({
+    action:'saveCountdown',adminPass:PASS,
+    exam:document.getElementById('fExam').value,
+    date:document.getElementById('fCdDate').value,
+    target:document.getElementById('fCdTarget').value
+  })}).then(function(r){return r.json()}).then(function(d){
+    btn.disabled=false;
+    if(d&&d.ok){msg.textContent='✅ Save ho gaya!';msg.className='msg ok'}
+    else{msg.textContent='❌ '+(d&&d.error?d.error:'Password galat!');msg.className='msg err'}
+  }).catch(function(){btn.disabled=false;msg.textContent='❌ Server error!';msg.className='msg err'});
+};
+</script>
+</body>
+</html>
