@@ -24,9 +24,31 @@
     btn.className = 'tab-btn' + (idx === 0 ? ' active' : '');
     btn.textContent = cat.name;
     btn.dataset.key = cat.key;
-    btn.addEventListener('click', function(){ switchCategory(cat.key); });
+    btn.addEventListener('click', function(){
+      if(cat.key === 'account'){ openAccountModal(); return; }
+      switchCategory(cat.key);
+    });
     tabsNav.appendChild(btn);
   });
+
+  // ---- Account Modal ----
+  const accountModal = document.getElementById('accountModal');
+  function openAccountModal(){
+    accountModal.classList.remove('hidden');
+    if(window.PUN_renderAccount) window.PUN_renderAccount();
+  }
+  function closeAccountModal(){ accountModal.classList.add('hidden'); }
+  window.PUN_openAccountModal = openAccountModal;
+  window.PUN_closeAccountModal = closeAccountModal;
+  document.getElementById('accountModalClose').addEventListener('click', closeAccountModal);
+  accountModal.addEventListener('click', function(e){ if(e.target === accountModal) closeAccountModal(); });
+
+  // Site khulne par hi login popup (agar logged in nahi)
+  setTimeout(function(){
+    try{
+      if(!localStorage.getItem('prepupscnow_session')) openAccountModal();
+    }catch(e){}
+  }, 1000);
 
   function switchCategory(key){
     activeCategory = key;
@@ -34,15 +56,6 @@
     document.querySelectorAll('.tab-btn').forEach(function(b){
       b.classList.toggle('active', b.dataset.key === key);
     });
-    if(key === 'account'){
-      postListView.classList.add('hidden');
-      postView.classList.add('hidden');
-      accountView.classList.remove('hidden');
-      categoryTitle.textContent = '';
-      if(window.PUN_renderAccount) window.PUN_renderAccount();
-      window.scrollTo({top:0, behavior:'smooth'});
-      return;
-    }
     accountView.classList.add('hidden');
     showPostList();
   }

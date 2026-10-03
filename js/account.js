@@ -51,16 +51,18 @@
           '<button class="acc-tab" id="tabReg">Naya Account</button>' +
         '</div>' +
         '<div id="loginForm">' +
-          '<input id="liName" placeholder="पूरा नाम" class="acc-input">' +
-          '<input id="liPass" type="password" inputmode="numeric" maxlength="4" placeholder="4 अंकों का पासवर्ड" class="acc-input">' +
-          '<button class="acc-btn" id="doLogin">Sign In →</button>' +
+          '<input id="liName" placeholder="Username (पूरा नाम) *" class="acc-input">' +
+          '<input id="liPass" type="password" inputmode="numeric" maxlength="4" placeholder="4 अंकों का पासवर्ड *" class="acc-input">' +
+          '<button class="acc-btn" id="doLogin">Submit →</button>' +
           '<button class="acc-link" id="forgotLink" style="margin-top:10px">पासवर्ड भूल गए? (Forgot Password)</button>' +
         '</div>' +
         '<div id="regForm" style="display:none">' +
-          '<input id="rgName" placeholder="पूरा नाम *" class="acc-input">' +
+          '<input id="rgName" placeholder="Username (पूरा नाम) *" class="acc-input">' +
           '<input id="rgAge" type="number" min="10" max="99" placeholder="उम्र *" class="acc-input">' +
           '<input id="rgVillage" placeholder="गांव / शहर *" class="acc-input">' +
           '<input id="rgPass" type="password" inputmode="numeric" maxlength="4" placeholder="4 अंकों का पासवर्ड बनाओ *" class="acc-input">' +
+          '<p class="acc-note" style="margin:4px 0 8px">🔒 सुरक्षा प्रश्न: <b>आपके पसंदीदा व्यक्ति का नाम क्या है?</b></p>' +
+          '<input id="rgFav" placeholder="पसंदीदा व्यक्ति का नाम *" class="acc-input">' +
           '<button class="acc-btn" id="doReg">Account बनाओ →</button>' +
         '</div>' +
         '<p class="acc-msg" id="accMsg"></p></div>';
@@ -82,34 +84,36 @@
         const age = document.getElementById('rgAge').value.trim();
         const village = document.getElementById('rgVillage').value.trim();
         const pass = document.getElementById('rgPass').value.trim();
-        if(!name || !age || !village){ msg('सभी * वाले field भरो'); return; }
+        const fav = document.getElementById('rgFav').value.trim();
+        if(!name || !age || !village || !fav){ msg('सभी * वाले field भरो'); return; }
         if(!/^\d{4}$/.test(pass)){ msg('पासवर्ड ठीक 4 अंक का होना चाहिए'); return; }
         const key = name.toLowerCase();
         const u = getUsers();
         if(u[key]){ msg('इस नाम से account पहले से है — Sign In करो'); return; }
-        u[key] = { name:name, age:age, village:village, pass:pass, signins:[] };
+        u[key] = { name:name, age:age, village:village, pass:pass, security:fav.toLowerCase(), signins:[] };
         saveUsers(u); setSession(key);
         msg('Account बन गया! 🎉', true);
-        setTimeout(renderAccount, 800);
+        setTimeout(function(){ if(window.PUN_closeAccountModal) window.PUN_closeAccountModal(); }, 900);
       };
       document.getElementById('doLogin').onclick = function(){
         const name = document.getElementById('liName').value.trim().toLowerCase();
         const pass = document.getElementById('liPass').value.trim();
         const u = getUsers();
+        if(!name || !pass){ msg('Username aur 4-digit password dono भरो'); return; }
         if(!u[name]){ msg('Account नहीं मिला — पहले Naya Account बनाओ'); return; }
         if(u[name].pass !== pass){ msg('गलत पासवर्ड'); return; }
         setSession(name);
         msg('वापस स्वागत है, ' + u[name].name + '! 🎉', true);
-        setTimeout(renderAccount, 800);
+        setTimeout(function(){ if(window.PUN_closeAccountModal) window.PUN_closeAccountModal(); }, 900);
       };
-      // ---- FORGOT PASSWORD ----
+      // ---- FORGOT PASSWORD (security question: favourite person) ----
       document.getElementById('forgotLink').onclick = function(){
         box.innerHTML =
           '<div class="acc-card"><h3>🔑 पासवर्ड रीसेट</h3>' +
-          '<p class="acc-note">पहचान verify करो — नाम + उम्र + गांव सही होना चाहिए</p>' +
-          '<input id="fpName" placeholder="पूरा नाम *" class="acc-input">' +
-          '<input id="fpAge" type="number" placeholder="उम्र *" class="acc-input">' +
-          '<input id="fpVillage" placeholder="गांव / शहर *" class="acc-input">' +
+          '<p class="acc-note">सुरक्षा प्रश्न का उत्तर दो</p>' +
+          '<input id="fpName" placeholder="Username (पूरा नाम) *" class="acc-input">' +
+          '<p class="acc-note" style="margin:4px 0 8px">🔒 <b>आपके पसंदीदा व्यक्ति का नाम क्या है?</b></p>' +
+          '<input id="fpFav" placeholder="पसंदीदा व्यक्ति का नाम *" class="acc-input">' +
           '<input id="fpNew" type="password" inputmode="numeric" maxlength="4" placeholder="नया 4 अंकों का पासवर्ड *" class="acc-input">' +
           '<button class="acc-btn" id="doReset">पासवर्ड बदलो →</button>' +
           '<button class="acc-link" id="fpBack" style="margin-top:10px">← वापस</button>' +
@@ -118,18 +122,20 @@
         document.getElementById('fpBack').onclick = renderAccount;
         document.getElementById('doReset').onclick = function(){
           const name = document.getElementById('fpName').value.trim().toLowerCase();
-          const age = document.getElementById('fpAge').value.trim();
-          const village = document.getElementById('fpVillage').value.trim().toLowerCase();
+          const fav = document.getElementById('fpFav').value.trim().toLowerCase();
           const npass = document.getElementById('fpNew').value.trim();
           const u = getUsers();
           if(!u[name]){ msg2('इस नाम से कोई account नहीं मिला'); return; }
-          if(String(u[name].age) !== age || String(u[name].village).toLowerCase() !== village){
-            msg2('उम्र या गांव मेल नहीं खाया — पहचान verify नहीं हुई'); return;
+          if(u[name].security){
+            if(u[name].security !== fav){ msg2('सुरक्षा प्रश्न का उत्तर गलत है'); return; }
+          } else {
+            // purane accounts (security question nahi tha) — age+village fallback
+            msg2('पुराना account है — नया account बनाओ या age+village se verify karo'); return;
           }
           if(!/^\d{4}$/.test(npass)){ msg2('नया पासवर्ड ठीक 4 अंक का होना चाहिए'); return; }
           u[name].pass = npass; saveUsers(u); setSession(name);
           msg2('पासवर्ड बदल गया! ✅', true);
-          setTimeout(renderAccount, 1000);
+          setTimeout(function(){ if(window.PUN_closeAccountModal) window.PUN_closeAccountModal(); }, 1000);
         };
       };
       return;
