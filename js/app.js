@@ -210,6 +210,25 @@
     document.getElementById('breakingMarquee').textContent = latest.join('  •  ');
   }
 
+  // ---- Donate modal ----
+  window.openDonate = function(){
+    document.getElementById('donateModal').classList.remove('hidden');
+  };
+  window.closeDonate = function(){
+    document.getElementById('donateModal').classList.add('hidden');
+  };
+  window.copyUpi = function(){
+    const id = document.getElementById('upiId').textContent;
+    if(navigator.clipboard) navigator.clipboard.writeText(id).then(function(){
+      alert('UPI ID copy ho gaya: ' + id);
+    });
+    else { prompt('Copy karo:', id); }
+  };
+  document.addEventListener('click', function(e){
+    const m = document.getElementById('donateModal');
+    if(m && e.target === m) window.closeDonate();
+  });
+
   // ---- UPSC Countdown (CSE Prelims 2027 — 23 May 2027) ----
   const UPSC_DATE = new Date('2027-05-23T09:30:00+05:30').getTime();
   const cdEl = document.getElementById('upscCountdown');
