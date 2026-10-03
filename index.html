@@ -166,7 +166,7 @@
 var popup=document.getElementById('bdayPopup');
 var canvas=document.getElementById('balloonCanvas');
 var ctx=canvas.getContext('2d');
-var balloons=[],parts=[],running=false,raf=null;
+var balloons=[],parts=[],running=false,raf=null,stopSpawning=false;
 var colors=['#ff4d6d','#ff8c00','#ffd700','#4dc3ff','#9d4edd','#51e08c','#ff6b9d'];
 function sizeCanvas(){canvas.width=innerWidth;canvas.height=innerHeight}
 sizeCanvas();addEventListener('resize',sizeCanvas);
@@ -183,8 +183,8 @@ function burst(b){
 }
 function loop(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  // spawn
-  if(balloons.length<28&&Math.random()<.25)spawnBalloon(true);
+  // spawn (5 sec ke baad band)
+  if(!stopSpawning&&balloons.length<28&&Math.random()<.25)spawnBalloon(true);
   // balloons
   for(var i=balloons.length-1;i>=0;i--){var b=balloons[i];
     if(b.popped){balloons.splice(i,1);continue}
@@ -214,8 +214,11 @@ function loop(){
 }
 function startBalloons(){
   canvas.style.display='block';
+  stopSpawning=false;
   for(var k=0;k<12;k++)spawnBalloon(true);
   if(!running){running=true;raf=requestAnimationFrame(loop)}
+  // 5 second baad naye gubbare band
+  setTimeout(function(){stopSpawning=true},5000);
 }
 function showPopup(){popup.classList.add('show');startBalloons()}
 function hidePopup(){popup.classList.remove('show')}
