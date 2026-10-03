@@ -187,7 +187,7 @@
     document.getElementById('postTitle').textContent = p.title;
     document.getElementById('postCategory').textContent = cat.name;
     document.getElementById('postDate').textContent = p.date;
-    document.getElementById('postBody').innerHTML = p.body; // trusted local content
+    document.getElementById('postBody').innerHTML = p.body + '<div class="bbn-credit">📰 <a href="https://bolbindunews.blogspot.com/" target="_blank" rel="noopener">Bol Bindu News</a> Network • © PrepUPSCNow</div>'; // trusted local content
     postListView.classList.add('hidden');
     postView.classList.remove('hidden');
     window.scrollTo({top:0, behavior:'smooth'});
