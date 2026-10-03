@@ -102,6 +102,11 @@ body.theme-silver .site-header{background:linear-gradient(135deg,#5a6268,#8a949c
 .theme-platinum .theme-badge{background:linear-gradient(135deg,#9fb3c8,#e8eef3);color:#2c3e50}
 .theme-gold .theme-badge{background:linear-gradient(135deg,#ffd700,#ffed4e);color:#5a4a00}
 .theme-silver .theme-badge{background:linear-gradient(135deg,#adb5bd,#dee2e6);color:#343a40}
+/* Verified tick — theme colour ka (gold/platinum/silver user ke naam ke saath) */
+.verified-tick{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:13px;font-weight:800;margin-left:6px;vertical-align:middle}
+.gold-tick{background:linear-gradient(135deg,#ffd700,#ffed4e);color:#5a4a00;box-shadow:0 0 8px rgba(255,215,0,.7)}
+.platinum-tick{background:linear-gradient(135deg,#9fb3c8,#e8eef3);color:#2c3e50;box-shadow:0 0 8px rgba(159,179,200,.7)}
+.silver-tick{background:linear-gradient(135deg,#adb5bd,#dee2e6);color:#343a40;box-shadow:0 0 6px rgba(173,181,189,.5)}
 
 /* Date filter pills */
 .date-filter{display:flex;overflow-x:auto;gap:8px;padding:4px 2px 14px;-webkit-overflow-scrolling:touch}
