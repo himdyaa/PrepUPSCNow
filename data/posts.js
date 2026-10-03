@@ -4,6 +4,7 @@
    Post object: { id, title, date, excerpt, body (HTML string) }
 */
 const CATEGORIES = [
+  { key: "current-bharti", name: "📢 Current Bharti", desc: "Sarkari naukri — nayi bhartiyan, apply karo" },
   { key: "current-affairs", name: "📰 Daily Current Affairs", desc: "Roz ki taaza khabrein — UPSC ke liye" },
   { key: "reasoning",       name: "🧠 Reasoning",             desc: "Logical reasoning aur aptitude practice" },
   { key: "polity",          name: "🏛️ Polity",                desc: "Bharatiya samvidhan aur raajvyavastha" },
@@ -16,6 +17,10 @@ const CATEGORIES = [
 ];
 
 const POSTS = {
+
+/* ============ CURRENT BHARTI (Sarkari Naukri) ============ */
+"current-bharti": [
+],
 
 /* ============ DAILY CURRENT AFFAIRS ============ */
 "current-affairs": [
