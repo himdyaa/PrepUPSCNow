@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrepUPSCNow — UPSC Preparation Now</title>
+<meta name="description" content="PrepUPSCNow — Daily Current Affairs, Reasoning, Polity, History, Geography, Economy, Science & Tech. UPSC preparation in Hindi.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-icon">📚</span>
+      <div>
+        <h1>PrepUPSCNow</h1>
+        <p class="tagline">UPSC Preparation — सच सबसे पहले</p>
+      </div>
+    </div>
+    <div class="header-date" id="todayDate"></div>
+  </div>
+</header>
+
+<div class="breaking-bar">
+  <span class="breaking-label">🔴 LIVE</span>
+  <marquee id="breakingMarquee" scrollamount="6">UPSC preparation ke liye daily current affairs, reasoning aur sabhi subjects — ek hi jagah.</marquee>
+</div>
+
+<nav class="tabs" id="tabsNav">
+  <!-- Tabs injected by JS -->
+</nav>
+
+<main class="container">
+  <!-- Post list view -->
+  <section id="postListView">
+    <h2 class="section-title" id="categoryTitle"></h2>
+    <div class="post-grid" id="postGrid"></div>
+  </section>
+
+  <!-- Single post view -->
+  <section id="postView" class="hidden">
+    <button class="back-btn" id="backBtn">← वापस</button>
+    <article class="post-article">
+      <h1 id="postTitle"></h1>
+      <div class="post-meta"><span id="postCategory"></span> • <span id="postDate"></span></div>
+      <div class="post-body" id="postBody"></div>
+    </article>
+  </section>
+
+  <!-- Account view -->
+  <section id="accountView" class="hidden">
+    <div id="accountBox"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>© PrepUPSCNow • All Rights Reserved</p>
+  <p class="footer-note">UPSC preparation ke liye banayi gayi educational website</p>
+</footer>
+
+<script src="data/posts.js"></script>
+<script src="js/account.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+/* PrepUPSCNow — Styles */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#cc0000; --dark:#1a1a2e; --bg:#f4f4f8;
+  --card:#ffffff; --text:#222; --muted:#666;
+  --yellow:#ffcc00;
+}
+body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.hidden{display:none!important}
+
+/* Header */
+.site-header{background:linear-gradient(135deg,#b30000,#e60000);color:#fff;padding:18px 16px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{font-size:44px}
+.logo h1{font-size:28px;letter-spacing:.5px}
+.tagline{font-size:13px;opacity:.9}
+.header-date{font-size:14px;background:rgba(255,255,255,.15);padding:8px 14px;border-radius:20px}
+
+/* Breaking bar */
+.breaking-bar{background:var(--dark);color:#fff;display:flex;align-items:center;overflow:hidden}
+.breaking-label{background:var(--red);padding:10px 16px;font-weight:800;white-space:nowrap;font-size:14px}
+.breaking-bar marquee{flex:1;padding:10px;font-size:14px}
+
+/* Tabs */
+.tabs{background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.08);position:sticky;top:0;z-index:50;display:flex;overflow-x:auto;gap:4px;padding:10px 12px;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{height:4px}
+.tabs::-webkit-scrollbar-thumb{background:#ccc;border-radius:4px}
+.tab-btn{flex:0 0 auto;border:0;background:#f0f0f5;color:var(--text);padding:10px 18px;border-radius:25px;font-size:15px;font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap}
+.tab-btn:hover{background:#e2e2ea}
+.tab-btn.active{background:var(--red);color:#fff;box-shadow:0 2px 8px rgba(204,0,0,.35)}
+
+/* Container */
+.container{max-width:1100px;margin:0 auto;padding:20px 16px;min-height:60vh}
+.section-title{font-size:24px;margin-bottom:16px;padding-left:12px;border-left:5px solid var(--red)}
+
+/* Post grid */
+.post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.post-card{background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.08);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.post-card:hover{transform:translateY(-4px);box-shadow:0 6px 18px rgba(0,0,0,.14)}
+.post-card-body{padding:16px}
+.post-card h3{font-size:17px;margin-bottom:8px;line-height:1.5}
+.post-card .excerpt{font-size:14px;color:var(--muted);margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.post-card .meta{font-size:12px;color:#999;display:flex;justify-content:space-between}
+.post-card .read-more{color:var(--red);font-weight:700;font-size:14px}
+
+/* Single post */
+.back-btn{background:var(--dark);color:#fff;border:0;padding:10px 20px;border-radius:8px;font-size:15px;cursor:pointer;margin-bottom:16px}
+.back-btn:hover{background:#333}
+.post-article{background:#fff;border-radius:12px;padding:28px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.post-article h1{font-size:26px;margin-bottom:10px;line-height:1.4}
+.post-meta{color:#888;font-size:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #eee}
+.post-body{font-size:17px}
+.post-body h2{font-size:21px;margin:22px 0 10px;color:var(--red)}
+.post-body h3{font-size:18px;margin:18px 0 8px}
+.post-body p{margin-bottom:12px}
+.post-body ul,.post-body ol{margin:0 0 14px 22px}
+.post-body li{margin-bottom:6px}
+.post-body blockquote{background:#fff8e1;border-left:4px solid var(--yellow);padding:12px 16px;margin:14px 0;border-radius:0 8px 8px 0}
+.post-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px}
+.post-body th,.post-body td{border:1px solid #ddd;padding:10px;text-align:left}
+.post-body th{background:var(--red);color:#fff}
+.quiz-q{background:#f8f9ff;border:1px solid #d0d5ff;border-radius:10px;padding:14px;margin:12px 0}
+.quiz-q p{font-weight:700;margin-bottom:8px}
+.quiz-opts{list-style:none;margin:0!important;padding:0}
+.quiz-opts li{padding:6px 0}
+.quiz-ans{color:#0a7d2c;font-weight:700;margin-top:8px}
+
+/* Footer */
+.site-footer{background:var(--dark);color:#ccc;text-align:center;padding:24px 16px;margin-top:30px}
+.site-footer p{margin:4px 0;font-size:14px}
+.footer-note{font-size:12px;opacity:.7}
+
+/* Account / Sign-in system */
+.acc-card{background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,.08);max-width:520px;margin:0 auto}
+.acc-card h3{font-size:22px;margin-bottom:8px}
+.acc-note{color:var(--muted);margin-bottom:14px;font-size:14px}
+.acc-tabs{display:flex;gap:8px;margin-bottom:16px}
+.acc-tab{flex:1;border:1px solid #ddd;background:#f5f5f8;padding:10px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer}
+.acc-tab.active{background:var(--red);color:#fff;border-color:var(--red)}
+.acc-input{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:16px;margin-bottom:10px;font-family:inherit}
+.acc-input:focus{outline:2px solid var(--red);border-color:var(--red)}
+.acc-btn{width:100%;background:var(--red);color:#fff;border:0;padding:13px;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer}
+.acc-btn:hover{background:#a80000}
+.acc-btn.big{font-size:18px;padding:15px;margin:10px 0}
+.acc-msg{min-height:22px;font-size:14px;margin-top:10px;font-weight:600}
+.acc-today{font-size:17px;margin-bottom:12px}
+.acc-done{background:#e8f9ee;color:#0a7d2c;padding:12px;border-radius:8px;font-weight:700;margin:10px 0;text-align:center}
+.streak-row{display:flex;gap:12px;margin:12px 0}
+.streak-box{flex:1;background:linear-gradient(135deg,#fff3e0,#ffe0b2);border-radius:10px;padding:14px;text-align:center}
+.streak-num{font-size:26px;font-weight:800}
+.streak-label{font-size:13px;color:#666}
+.acc-meta{font-size:13px;color:#888;margin-top:10px}
+.cal-title{margin:16px 0 8px;font-size:15px}
+.cal-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+.cal-day{background:#eee;border-radius:6px;text-align:center;font-size:12px;padding:7px 0;color:#999}
+.cal-day.on{background:#4caf50;color:#fff;font-weight:700}
+.cal-day.today{outline:2px solid var(--red)}
+.acc-link{background:none;border:0;color:var(--red);font-size:14px;cursor:pointer;margin-top:14px;text-decoration:underline}
+
+/* Mobile */
+@media(max-width:640px){
+  .logo h1{font-size:22px}
+  .logo-icon{font-size:34px}
+  .post-article{padding:18px}
+  .post-article h1{font-size:21px}
+  .post-body{font-size:16px}
+  .tab-btn{padding:8px 14px;font-size:14px}
+}
