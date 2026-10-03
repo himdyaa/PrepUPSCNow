@@ -7,6 +7,7 @@
 <meta name="description" content="PrepUPSCNow — UPSC ki taiyaari Hindi me. Roz Daily Current Affairs, Reasoning, Polity, History, Geography, Economy, Science & Tech. Free PDF notes download karo.">
 <meta name="keywords" content="PrepUPSCNow, prepupscnow, UPSC preparation Hindi, UPSC Hindi notes, daily current affairs Hindi, UPSC current affairs, reasoning Hindi, polity Hindi, UPSC PDF notes, UPSC taiyaari">
 <meta name="author" content="PrepUPSCNow">
+<meta name="google-adsense-account" content="ca-pub-6424011735939374">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://himdyaa.github.io/PrepUPSCNow/">
 <!-- Open Graph -->
@@ -45,6 +46,26 @@
 <div class="breaking-bar">
   <span class="breaking-label">🔴 LIVE</span>
   <marquee id="breakingMarquee" scrollamount="6">UPSC preparation ke liye daily current affairs, reasoning aur sabhi subjects — ek hi jagah.</marquee>
+</div>
+
+<!-- Donate button -->
+<div class="donate-bar">
+  <button class="donate-btn" onclick="openDonate()">☕ Support Karo — UPI se donate karein</button>
+</div>
+
+<!-- Donate Modal -->
+<div id="donateModal" class="modal hidden">
+  <div class="modal-box">
+    <span class="modal-close" onclick="closeDonate()">&times;</span>
+    <h3>☕ PrepUPSCNow ko Support Karo</h3>
+    <p>Roz 90+ free posts, PDF notes — sab free rahe, iske liye tumhara support chahiye!</p>
+    <div class="upi-box">
+      <div class="upi-id" id="upiId">himdyaa@axl</div>
+      <button class="copy-btn" onclick="copyUpi()">📋 Copy UPI ID</button>
+    </div>
+    <a class="upi-pay-btn" href="upi://pay?pa=himdyaa@axl&pn=PrepUPSCNow&cu=INR">💳 UPI App se Pay Karo</a>
+    <p class="donate-note">₹10, ₹50, ₹100 — jitna dil kare. Har rupaya content me lagega! 🙏</p>
+  </div>
 </div>
 
 <!-- UPSC Countdown -->
