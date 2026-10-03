@@ -36,10 +36,11 @@
   }
 
   // User ka data Sheet me bhejo (theme Sheet wali hi wapas bhejo taaki overwrite na ho)
+  // Username hamesha lowercase bhejo taaki Sheet me matching pakki ho
   function pushUserToSheet(user, streak, sheetTheme){
     try{
       const payload = {
-        username: user.name,
+        username: String(user.name).toLowerCase(),
         age: user.age,
         village: user.village,
         streak: streak,
