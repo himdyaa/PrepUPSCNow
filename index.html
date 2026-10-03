@@ -20,6 +20,7 @@
       </div>
     </div>
     <div class="header-date"><span class="date-label">आज की तारीख़</span><span class="date-value"><span class="date-icon">📅</span><span id="todayDate"></span></span></div>
+    <button class="header-dl-btn" id="headerDlBtn" title="Aaj ka PDF package download karo">📥 Current Package</button>
   </div>
 </header>
 
@@ -55,6 +56,23 @@
     <div id="accountBoxOld"></div>
   </section>
 </main>
+
+<!-- PDF Date-wise Download Modal -->
+<div class="modal-overlay hidden" id="pdfModal">
+  <div class="modal-box">
+    <button class="modal-close" id="pdfModalClose">✕</button>
+    <div class="acc-card">
+      <h3>📥 PDF Download</h3>
+      <p class="acc-note">Taarikh chuno — us din ka package download karo</p>
+      <select id="pdfDateSelect" class="acc-input"></select>
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <button class="acc-btn" id="dlFullPdf" style="flex:1">📦 Full Package<br><small style="font-weight:400">sabhi subjects</small></button>
+        <button class="acc-btn" id="dlCaPdf" style="flex:1;background:#0a7d2c">📰 Current Affairs<br><small style="font-weight:400">sirf CA</small></button>
+      </div>
+      <p class="acc-msg" id="pdfMsg"></p>
+    </div>
+  </div>
+</div>
 
 <!-- Account Login Popup Modal -->
 <div class="modal-overlay hidden" id="accountModal">
