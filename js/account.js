@@ -338,8 +338,13 @@
     notesHtml += '</div>';
     notesHtml += '<div class="note-add"><input id="newNoteText" placeholder="Aaj kya karna/padhna hai? ✍️" class="acc-input"><button class="acc-btn" id="addNote">+ Add</button></div></div>';
 
+    // theme colour ka verified tick (gold/platinum/silver)
+    const tickHtml = currentTheme
+      ? '<span class="verified-tick ' + currentTheme + '-tick" title="' + currentTheme.toUpperCase() + ' Member">✓</span>'
+      : '';
+
     box.innerHTML =
-      '<div class="acc-card"><h3 class="acc-greet">👤 नमस्ते, ' + escapeHtml(me.name) + '</h3>' +
+      '<div class="acc-card"><h3 class="acc-greet">👤 नमस्ते, ' + escapeHtml(me.name) + tickHtml + '</h3>' +
       '<p class="acc-today">📅 आज: <b>' + fmtDate(todayStr()) + '</b></p>' +
       '<div class="streak-row">' +
         '<div class="streak-box"><div class="streak-num">🔥 ' + streak + '</div><div class="streak-label">दिन का स्ट्रीक' + (currentTheme ? '<br><span class="theme-badge">' + (currentTheme==='gold'?'🥇 GOLD':currentTheme==='platinum'?'🥈 PLATINUM':'🥉 SILVER') + '</span>' : '') + '</div></div>' +
