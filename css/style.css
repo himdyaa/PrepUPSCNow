@@ -8,14 +8,28 @@
 body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
 .hidden{display:none!important}
 
-/* Header */
-.site-header{background:linear-gradient(135deg,#b30000,#e60000);color:#fff;padding:18px 16px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.header-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:12px}
-.logo-icon{font-size:44px}
-.logo h1{font-size:28px;letter-spacing:.5px}
-.tagline{font-size:13px;opacity:.9}
-.header-date{font-size:14px;background:rgba(255,255,255,.15);padding:8px 14px;border-radius:20px}
+/* Header — unique premium design */
+.site-header{position:relative;background:linear-gradient(120deg,#5c0a0a 0%,#a31212 45%,#d41f1f 100%);color:#fff;box-shadow:0 3px 12px rgba(0,0,0,.25);overflow:hidden}
+.site-header::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 85% 20%,rgba(255,255,255,.09),transparent 40%),
+  radial-gradient(circle at 10% 90%,rgba(0,0,0,.18),transparent 45%);pointer-events:none}
+.tricolor-strip{height:5px;background:linear-gradient(90deg,#FF9933 0 33%,#f5f5f5 33% 66%,#138808 66% 100%);position:relative;z-index:2}
+.header-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:20px 16px}
+.logo{display:flex;align-items:center;gap:14px}
+.logo-badge{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;
+  background:linear-gradient(145deg,#ffe9a8,#f5b301 60%,#c78d00);
+  box-shadow:0 0 0 3px rgba(255,255,255,.25),0 4px 14px rgba(0,0,0,.35),0 0 22px rgba(245,179,1,.45)}
+.logo-text h1{font-size:30px;letter-spacing:.5px;line-height:1.15;text-shadow:0 2px 6px rgba(0,0,0,.35)}
+.l-prep{color:#fff;font-weight:800}
+.l-upsc{color:var(--yellow);font-weight:900;text-shadow:0 0 14px rgba(255,204,0,.55)}
+.l-now{color:#fff;font-weight:800}
+.tagline{font-size:13px;opacity:.92;margin-top:2px;letter-spacing:.3px}
+.tag-star{color:var(--yellow);font-size:11px}
+.header-date{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);
+  padding:9px 16px;border-radius:30px;backdrop-filter:blur(4px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+.date-icon{font-size:16px}
 
 /* Breaking bar */
 .breaking-bar{background:var(--dark);color:#fff;display:flex;align-items:center;overflow:hidden}
@@ -100,8 +114,10 @@ body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:v
 
 /* Mobile */
 @media(max-width:640px){
-  .logo h1{font-size:22px}
-  .logo-icon{font-size:34px}
+  .logo-text h1{font-size:23px}
+  .logo-badge{width:50px;height:50px;font-size:25px}
+  .tagline{font-size:11.5px}
+  .header-date{font-size:12.5px;padding:7px 13px}
   .post-article{padding:18px}
   .post-article h1{font-size:21px}
   .post-body{font-size:16px}
