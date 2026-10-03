@@ -298,3 +298,5 @@ body.theme-silver .site-header{background:linear-gradient(135deg,#5a6268,#8a949c
   50%{box-shadow:0 0 22px rgba(255,0,0,.95);border-color:#ff6b6b;transform:scale(1.04)}}
 .bday-header-btn:hover{animation-play-state:paused;transform:scale(1.06)}
 @media(max-width:600px){.bday-header-btn{font-size:12px;padding:8px 14px}.bday-title{font-size:25px}.bday-name{font-size:22px}}
+.bday-upcoming{display:inline-block;background:#ff0000;color:#fff;font-weight:800;font-size:13px;
+  padding:6px 16px;border-radius:15px;margin-bottom:6px;letter-spacing:1px;animation:bdayBlink 1.2s infinite}
