@@ -41,6 +41,7 @@
     </div>
     <div class="header-date"><span class="date-label">आज की तारीख़</span><span class="date-value"><span class="date-icon">📅</span><span id="todayDate"></span></span></div>
     <button class="header-dl-btn" id="headerDlBtn" title="Aaj ke notes ka PDF download karo">📥 PDF Notes Download Karo</button>
+    <button class="bday-header-btn" id="bdayHeaderBtn">🎂 Upcoming Birthday: Jiya (19 Oct)</button>
     <div class="header-emblem"><img src="images/ashoka-emblem.png" alt="सत्यमेव जयते"><span>सत्यमेव जयते</span></div>
   </div>
 </header>
@@ -142,5 +143,97 @@
 <script src="data/posts.js"></script>
 <script src="js/account.js"></script>
 <script src="js/app.js"></script>
+
+<!-- 🎂 Birthday Popup — Jiya Panjwani -->
+<canvas id="balloonCanvas"></canvas>
+<div id="bdayPopup" class="bday-popup">
+  <div class="bday-card">
+    <button class="bday-close" id="bdayClose" aria-label="Band karo">✕</button>
+    <div class="bday-emoji">🎉🎂🎉</div>
+    <div class="bday-upcoming">🔔 UPCOMING BIRTHDAY 🔔</div>
+    <h2 class="bday-title">Advance Happy Birthday!</h2>
+    <div class="bday-name">Jiya Panjwani</div>
+    <div class="bday-tag">⭐ Future IAS ⭐</div>
+    <div class="bday-date">🎈 19 October 2026 🎈</div>
+    <p class="bday-msg">Tumhara sapna zaroor poora hoga!<br>UPSC ki taiyaari me lage raho 💪</p>
+    <button class="bday-btn" id="bdayBtn2">🎊 Celebrate 🎊</button>
+  </div>
+</div>
+
+<script>
+/* ===== Birthday Popup + Balloons ===== */
+(function(){
+var popup=document.getElementById('bdayPopup');
+var canvas=document.getElementById('balloonCanvas');
+var ctx=canvas.getContext('2d');
+var balloons=[],parts=[],running=false,raf=null;
+var colors=['#ff4d6d','#ff8c00','#ffd700','#4dc3ff','#9d4edd','#51e08c','#ff6b9d'];
+function sizeCanvas(){canvas.width=innerWidth;canvas.height=innerHeight}
+sizeCanvas();addEventListener('resize',sizeCanvas);
+function spawnBalloon(fromBottom){
+  var r=18+Math.random()*22;
+  balloons.push({x:Math.random()*canvas.width,y:fromBottom?canvas.height+r:-r,r:r,
+    vy:-(1+Math.random()*1.8),wob:Math.random()*Math.PI*2,wobSp:.02+Math.random()*.03,
+    c:colors[Math.floor(Math.random()*colors.length)],burstAt:Math.random()<.45?canvas.height*(.15+Math.random()*.5):-1,popped:false});
+}
+function burst(b){
+  b.popped=true;
+  for(var i=0;i<22;i++){var a=Math.random()*Math.PI*2,s=2+Math.random()*4;
+    parts.push({x:b.x,y:b.y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-1,life:1,c:Math.random()<.5?b.c:'#fff',r:2+Math.random()*3});}
+}
+function loop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  // spawn
+  if(balloons.length<28&&Math.random()<.25)spawnBalloon(true);
+  // balloons
+  for(var i=balloons.length-1;i>=0;i--){var b=balloons[i];
+    if(b.popped){balloons.splice(i,1);continue}
+    b.y+=b.vy;b.wob+=b.wobSp;b.x+=Math.sin(b.wob)*1.2;
+    if(b.burstAt>0&&b.y<=b.burstAt){burst(b);continue}
+    if(b.y<-b.r-20){balloons.splice(i,1);continue}
+    // draw balloon
+    ctx.save();ctx.translate(b.x,b.y);
+    var g=ctx.createRadialGradient(-b.r*.3,-b.r*.4,b.r*.1,0,0,b.r*1.2);
+    g.addColorStop(0,'#ffffff');g.addColorStop(.25,b.c);g.addColorStop(1,b.c);
+    ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(0,0,b.r,b.r*1.18,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=b.c;ctx.beginPath();ctx.moveTo(-4,b.r*1.18);ctx.lineTo(4,b.r*1.18);ctx.lineTo(0,b.r*1.18+7);ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,.25)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,b.r*1.18+7);
+    ctx.quadraticCurveTo(6,b.r*1.9,-4,b.r*2.4);ctx.stroke();
+    ctx.fillStyle='rgba(255,255,255,.55)';ctx.beginPath();ctx.ellipse(-b.r*.35,-b.r*.45,b.r*.22,b.r*.35,-.5,0,Math.PI*2);ctx.fill();
+    ctx.restore();
+  }
+  // confetti
+  for(var j=parts.length-1;j>=0;j--){var p=parts[j];
+    p.x+=p.vx;p.y+=p.vy;p.vy+=.12;p.life-=.02;
+    if(p.life<=0){parts.splice(j,1);continue}
+    ctx.save();ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle=p.c;
+    ctx.translate(p.x,p.y);ctx.rotate(p.x*.05);ctx.fillRect(-p.r,-p.r*.6,p.r*2,p.r*1.2);ctx.restore();
+  }
+  if(balloons.length||parts.length){raf=requestAnimationFrame(loop)}
+  else{running=false;canvas.style.display='none'}
+}
+function startBalloons(){
+  canvas.style.display='block';
+  for(var k=0;k<12;k++)spawnBalloon(true);
+  if(!running){running=true;raf=requestAnimationFrame(loop)}
+}
+function showPopup(){popup.classList.add('show');startBalloons()}
+function hidePopup(){popup.classList.remove('show')}
+document.getElementById('bdayClose').onclick=hidePopup;
+document.getElementById('bdayBtn2').onclick=function(){startBalloons();burst({x:canvas.width/2,y:canvas.height/2,popped:false})};
+popup.addEventListener('click',function(e){if(e.target===popup)hidePopup()});
+// gubbare par click = phodo!
+canvas.addEventListener('click',function(e){
+  for(var i=balloons.length-1;i>=0;i--){var b=balloons[i];
+    var dx=e.clientX-b.x,dy=e.clientY-b.y;
+    if(dx*dx+dy*dy<(b.r*1.3)*(b.r*1.3)){burst(b);break}}
+});
+// header button
+var hb=document.getElementById('bdayHeaderBtn');
+if(hb)hb.onclick=showPopup;
+// page khulne par popup
+window.addEventListener('load',function(){setTimeout(showPopup,1200)});
+})();
+</script>
 </body>
 </html>
