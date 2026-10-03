@@ -53,6 +53,8 @@ body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:v
 .date-pill{flex:0 0 auto;border:1px solid #ddd;background:#fff;color:var(--text);padding:8px 16px;border-radius:20px;font-size:13.5px;font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap;font-family:inherit}
 .date-pill:hover{border-color:var(--red);color:var(--red)}
 .date-pill.active{background:var(--dark);color:#fff;border-color:var(--dark);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.date-pill.dl-pill{background:#0a7d2c;border-color:#0a7d2c;color:#fff}
+.date-pill.dl-pill:hover{background:#086322;color:#fff;border-color:#086322}
 
 /* Container */
 .container{max-width:1100px;margin:0 auto;padding:20px 16px;min-height:60vh}
@@ -89,6 +91,12 @@ body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:v
 .quiz-opts{list-style:none;margin:0!important;padding:0}
 .quiz-opts li{padding:6px 0}
 .quiz-ans{color:#0a7d2c;font-weight:700;margin-top:8px}
+
+.header-dl-btn{background:#ffd700;color:#7a0000;border:0;font-weight:800;font-size:13px;
+  padding:10px 16px;border-radius:30px;cursor:pointer;white-space:nowrap;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);transition:transform .15s}
+.header-dl-btn:hover{transform:scale(1.05);background:#ffdf33}
+.header-dl-btn small{font-weight:600}
 
 /* Account Modal Popup */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px)}
@@ -137,6 +145,7 @@ body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:v
   .tagline{font-size:11.5px}
   .header-date{font-size:12.5px;padding:7px 13px;border-radius:14px}
   .date-label{font-size:10px}
+  .header-dl-btn{font-size:11.5px;padding:8px 12px}
   .post-article{padding:18px}
   .post-article h1{font-size:21px}
   .post-body{font-size:16px}
