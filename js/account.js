@@ -10,6 +10,85 @@
   const LS_TARGETS = 'prepupscnow_targets';     // {"2026-10-03": {posts, minutes}}
   const LS_NOTES = 'prepupscnow_notes';         // {"2026-10-03": [{text, done}]}
   const LS_READ = 'prepupscnow_read';           // {"2026-10-03": [postId, ...]}
+  const LS_SHEET_THEME = 'PUN_userTheme';       // Sheet se aayi theme ka cache
+
+  // ---- Google Sheet sync (PrepUPSCNow Users) ----
+  const SHEET_API = 'https://script.google.com/macros/s/AKfycbz9xNhcTIZn9BrfCOj1b5VxrI2QC1rEFWdGhUoBFHzCr3wnYyGNuVbhCItWocHArlQv2w/exec';
+  const VALID_THEMES = ['gold', 'platinum', 'silver'];
+
+  // Sheet se user ki theme lao (callback ko theme string ya '' milti hai; network fail par null)
+  function fetchSheetTheme(username, callback){
+    try{
+      fetch(SHEET_API + '?username=' + encodeURIComponent(String(username).toLowerCase()))
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          const t = String(d.theme || '').toLowerCase().trim();
+          if(VALID_THEMES.indexOf(t) !== -1){
+            try{ localStorage.setItem(LS_SHEET_THEME, t); }catch(e){}
+            callback(t);
+          } else {
+            try{ localStorage.removeItem(LS_SHEET_THEME); }catch(e){}
+            callback('');
+          }
+        })
+        .catch(function(){ callback(null); });
+    }catch(e){ callback(null); }
+  }
+
+  // User ka data Sheet me bhejo (theme Sheet wali hi wapas bhejo taaki overwrite na ho)
+  function pushUserToSheet(user, streak, sheetTheme){
+    try{
+      const payload = {
+        username: user.name,
+        age: user.age,
+        village: user.village,
+        streak: streak,
+        totalVisits: user.signins.length,
+        theme: sheetTheme || '',
+        lastLogin: todayStr()
+      };
+      fetch(SHEET_API, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {'Content-Type': 'text/plain'},
+        body: JSON.stringify(payload)
+      }).catch(function(){});
+    }catch(e){}
+  }
+
+  // Poora sync: pehle Sheet se theme lao → cache karo → data push karo → theme lagao
+  function syncUserToSheet(user){
+    if(!user) return;
+    const streak = calcStreak(user.signins);
+    fetchSheetTheme(user.name, function(sheetTheme){
+      const t = (sheetTheme === null) ? (localStorage.getItem(LS_SHEET_THEME) || '') : sheetTheme;
+      pushUserToSheet(user, streak, t);
+      applyTheme(streak);
+      // dashboard khula ho to badge refresh karo
+      const box = document.getElementById('accountBox');
+      if(box && box.querySelector('.acc-greet')) renderAccount();
+    });
+  }
+  window.PUN_syncUserToSheet = syncUserToSheet;
+
+  // ---- THEME SYSTEM ----
+  // Priority: 1) Sheet se manual theme  2) streak (200+ gold, 100+ platinum)
+  function getThemeForStreak(streak){
+    try{
+      const cached = localStorage.getItem(LS_SHEET_THEME);
+      if(cached && VALID_THEMES.indexOf(cached) !== -1) return cached;
+    }catch(e){}
+    if(streak >= 200) return 'gold';
+    if(streak >= 100) return 'platinum';
+    return '';
+  }
+  function applyTheme(streak){
+    const theme = getThemeForStreak(streak);
+    document.body.className = document.body.className.replace(/theme-\w+/g, '').trim();
+    if(theme) document.body.classList.add('theme-' + theme);
+    return theme;
+  }
+  window.PUN_applyTheme = applyTheme;
 
   function getUsers(){ try{ return JSON.parse(localStorage.getItem(LS_USERS)) || {}; }catch(e){ return {}; } }
   function saveUsers(u){ localStorage.setItem(LS_USERS, JSON.stringify(u)); }
@@ -140,6 +219,7 @@
         if(u[key]){ msg('इस नाम से account पहले से है — Sign In करो'); return; }
         u[key] = { name:name, age:age, village:village, pass:pass, security:fav.toLowerCase(), signins:[] };
         saveUsers(u); setSession(key);
+        syncUserToSheet(u[key]); // Sheet me user add karo
         msg('Account बन गया! 🎉', true);
         setTimeout(function(){ if(window.PUN_closeAccountModal) window.PUN_closeAccountModal(); }, 900);
       };
@@ -151,6 +231,7 @@
         if(!u[name]){ msg('Account नहीं मिला — पहले Naya Account बनाओ'); return; }
         if(u[name].pass !== pass){ msg('गलत पासवर्ड'); return; }
         setSession(name);
+        syncUserToSheet(u[name]); // Sheet sync + Sheet wali theme lagao
         msg('वापस स्वागत है, ' + u[name].name + '! 🎉', true);
         setTimeout(function(){ if(window.PUN_closeAccountModal) window.PUN_closeAccountModal(); }, 900);
       };
@@ -214,25 +295,8 @@
     const myNotes = notes[todayStr()] || [];
     const notesDone = myNotes.filter(function(n){ return n.done; }).length;
 
-    // ---- THEME SYSTEM ----
-    // Streak based: 200+ din = gold, 100+ din = platinum
-    // Excel/Sheet se manual override bhi possible (PUN_userTheme)
-    function applyTheme(){
-      const manualTheme = localStorage.getItem('PUN_userTheme'); // Excel se set hoga
-      let theme = '';
-      if(manualTheme && ['gold','platinum','silver'].includes(manualTheme)){
-        theme = manualTheme;
-      } else if(streak >= 200){
-        theme = 'gold';
-      } else if(streak >= 100){
-        theme = 'platinum';
-      }
-      document.body.className = document.body.className.replace(/theme-\w+/g, '').trim();
-      if(theme) document.body.classList.add('theme-' + theme);
-      return theme;
-    }
-    const currentTheme = applyTheme();
-    window.PUN_applyTheme = applyTheme;
+    // ---- THEME (Sheet manual theme > streak: 200+ gold, 100+ platinum) ----
+    const currentTheme = applyTheme(streak);
 
     // mini calendar: last 30 days
     let calHtml = '<div class="cal-grid">';
@@ -379,5 +443,22 @@
     document.addEventListener('DOMContentLoaded', startActivityTracker);
   } else {
     startActivityTracker();
+  }
+
+  // page load par: agar user logged in hai to Sheet sync + Sheet wali theme lagao
+  // (purane users ko dobara login karne ki zaroorat nahi — site kholte hi auto-sync)
+  function initSheetSyncOnLoad(){
+    try{
+      const sessKey = getSession();
+      if(!sessKey) return;
+      const users = getUsers();
+      const me = users[sessKey];
+      if(me) syncUserToSheet(me);
+    }catch(e){}
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initSheetSyncOnLoad);
+  } else {
+    initSheetSyncOnLoad();
   }
 })();
