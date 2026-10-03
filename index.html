@@ -219,8 +219,36 @@ function startBalloons(){
 }
 function showPopup(){popup.classList.add('show');startBalloons()}
 function hidePopup(){popup.classList.remove('show')}
+// 🎊 Celebrate = popup khud gubbare jaisa PHOOTEGA!
+function popThePopup(){
+  var card=popup.querySelector('.bday-card');
+  var r=card.getBoundingClientRect();
+  var cx=r.left+r.width/2, cy=r.top+r.height/2;
+  // card ko phootne wala animation
+  card.style.transition='transform .25s ease-in, opacity .25s';
+  card.style.transform='scale(1.35)';
+  card.style.opacity='0';
+  // bada dhamaaka — kayi bursts
+  canvas.style.display='block';
+  if(!running){running=true;raf=requestAnimationFrame(loop)}
+  var cols=['#ff4d6d','#ff8c00','#ffd700','#4dc3ff','#9d4edd','#51e08c','#ff6b9d','#fff'];
+  for(var k=0;k<5;k++){
+    (function(k){
+      setTimeout(function(){
+        var bx=cx+(Math.random()-.5)*r.width*.7, by=cy+(Math.random()-.5)*r.height*.7;
+        for(var i=0;i<45;i++){var a=Math.random()*Math.PI*2,s=2+Math.random()*7;
+          parts.push({x:bx,y:by,vx:Math.cos(a)*s,vy:Math.sin(a)*s-2,life:1.4,c:cols[Math.floor(Math.random()*cols.length)],r:2+Math.random()*4});}
+      },k*130);
+    })(k);
+  }
+  // thodi der baad popup band, card reset
+  setTimeout(function(){
+    popup.classList.remove('show');
+    card.style.transition='';card.style.transform='';card.style.opacity='';
+  },900);
+}
 document.getElementById('bdayClose').onclick=hidePopup;
-document.getElementById('bdayBtn2').onclick=function(){startBalloons();burst({x:canvas.width/2,y:canvas.height/2,popped:false})};
+document.getElementById('bdayBtn2').onclick=popThePopup;
 popup.addEventListener('click',function(e){if(e.target===popup)hidePopup()});
 // gubbare par click = phodo!
 canvas.addEventListener('click',function(e){
