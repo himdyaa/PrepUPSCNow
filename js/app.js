@@ -9,6 +9,7 @@
   const backBtn = document.getElementById('backBtn');
 
   let activeCategory = CATEGORIES[0].key;
+  let activeDate = ''; // '' = सभी दिन
 
   // Today's date in Hindi
   const days = ['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'];
@@ -29,6 +30,7 @@
 
   function switchCategory(key){
     activeCategory = key;
+    activeDate = ''; // nayi category par filter reset
     document.querySelectorAll('.tab-btn').forEach(function(b){
       b.classList.toggle('active', b.dataset.key === key);
     });
@@ -51,12 +53,37 @@
     const cat = CATEGORIES.find(function(c){ return c.key === activeCategory; });
     categoryTitle.textContent = cat.name;
     const posts = POSTS[activeCategory] || [];
+    const dateFilter = document.getElementById('dateFilter');
+
+    // Date-wise filter: unique taarikhein + "सभी दिन"
+    const dates = [];
+    posts.forEach(function(p){ if(dates.indexOf(p.date) === -1) dates.push(p.date); });
+    if(dates.length > 1){
+      let fh = '<button class="date-pill' + (activeDate === '' ? ' active' : '') + '" data-date="">📅 सभी दिन</button>';
+      dates.forEach(function(d){
+        fh += '<button class="date-pill' + (activeDate === d ? ' active' : '') + '" data-date="' + escapeHtml(d) + '">🗓️ ' + escapeHtml(d) + '</button>';
+      });
+      dateFilter.innerHTML = fh;
+      dateFilter.style.display = 'flex';
+      const pills = dateFilter.querySelectorAll('.date-pill');
+      pills.forEach(function(pill){
+        pill.addEventListener('click', function(){
+          activeDate = pill.getAttribute('data-date');
+          showPostList();
+        });
+      });
+    } else {
+      dateFilter.innerHTML = '';
+      dateFilter.style.display = 'none';
+    }
+
+    const filtered = activeDate ? posts.filter(function(p){ return p.date === activeDate; }) : posts;
     postGrid.innerHTML = '';
-    if(posts.length === 0){
-      postGrid.innerHTML = '<p style="color:#888">इस कैटेगरी में अभी कोई पोस्ट नहीं है। जल्द आ रही है!</p>';
+    if(filtered.length === 0){
+      postGrid.innerHTML = '<p style="color:#888">इस तारीख में कोई पोस्ट नहीं है।</p>';
       return;
     }
-    posts.forEach(function(p){
+    filtered.forEach(function(p){
       const card = document.createElement('div');
       card.className = 'post-card';
       card.innerHTML =
