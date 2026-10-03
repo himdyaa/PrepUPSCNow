@@ -15,6 +15,10 @@ body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:v
   radial-gradient(circle at 10% 90%,rgba(0,0,0,.18),transparent 45%);pointer-events:none}
 .tricolor-strip{height:5px;background:linear-gradient(90deg,#FF9933 0 33%,#f5f5f5 33% 66%,#138808 66% 100%);position:relative;z-index:2}
 .header-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:20px 16px}
+.header-emblem{display:flex;flex-direction:column;align-items:center;gap:2px;opacity:.92}
+.header-emblem img{height:56px;width:auto;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.header-emblem span{font-size:10px;font-weight:700;color:#ffe55c;letter-spacing:.5px}
+@media(max-width:600px){.header-emblem img{height:44px}.header-emblem span{font-size:9px}}
 .logo{display:flex;align-items:center;gap:14px}
 .logo-badge{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;
   background:linear-gradient(145deg,#ffe9a8,#f5b301 60%,#c78d00);
@@ -88,20 +92,33 @@ body.theme-platinum{--theme-primary:#5a6c7d;--theme-accent:#9fb3c8;--theme-bg:#f
 body.theme-platinum .site-header{background:linear-gradient(135deg,#4a5a6a,#7a8fa3)}
 body.theme-platinum .countdown-strip{background:linear-gradient(135deg,#e8eef3,#d0dce6);color:#2c3e50}
 
-/* Gold theme (200 din streak) — RICH & BOLD */
-body.theme-gold{--theme-primary:#c9960a;--theme-accent:#ffcf00;--theme-bg:#fff9e6;--theme-glow:0 0 30px rgba(255,200,0,.75);background:linear-gradient(180deg,#fffdf0 0%,#fff8dc 100%)}
-body.theme-gold .site-header{background:linear-gradient(135deg,#7a5c00,#c9960a 45%,#ffd700 100%);box-shadow:0 4px 20px rgba(200,150,0,.5)}
-body.theme-gold .site-header .site-title{color:#fff;text-shadow:0 2px 8px rgba(122,92,0,.6)}
-body.theme-gold .countdown-strip{background:linear-gradient(135deg,#ffe55c,#ffcf00);color:#4a3800;font-weight:800;box-shadow:0 2px 12px rgba(255,200,0,.5)}
-body.theme-gold .tab.active,body.theme-gold .acc-tab.active{background:linear-gradient(135deg,#c9960a,#ffd700);color:#4a3800;border-color:#c9960a;box-shadow:0 2px 10px rgba(255,200,0,.5)}
-body.theme-gold .post-card{border-top:4px solid #ffcf00;box-shadow:0 3px 14px rgba(200,150,0,.25)}
-body.theme-gold .post-card:hover{box-shadow:0 8px 24px rgba(200,150,0,.4)}
-body.theme-gold .acc-btn{background:linear-gradient(135deg,#e6a800,#ffd700);color:#4a3800;font-weight:800;box-shadow:0 3px 12px rgba(255,200,0,.55);border:none}
-body.theme-gold .acc-btn:hover{box-shadow:0 5px 18px rgba(255,200,0,.75)}
-body.theme-gold .streak-box{border-color:#ffcf00;background:linear-gradient(180deg,#fffdf0,#fff3c4);box-shadow:0 0 18px rgba(255,200,0,.45)}
-body.theme-gold .section-title{border-left-color:#ffcf00}
-body.theme-gold .cal-day.on{background:linear-gradient(135deg,#e6a800,#ffd700);color:#4a3800;font-weight:800}
+/* Gold theme (200 din streak) — ROYAL DARK GOLD */
+body.theme-gold{--theme-primary:#c9960a;--theme-accent:#ffcf00;--theme-bg:#141210;--theme-glow:0 0 30px rgba(255,200,0,.35);background:linear-gradient(180deg,#1a1611 0%,#141210 100%);color:#f5f0e1}
+body.theme-gold .site-header{background:linear-gradient(135deg,#3a2c00,#8a6a00 45%,#c9960a 100%);box-shadow:0 4px 20px rgba(200,150,0,.4);border-bottom:2px solid #ffcf00}
+body.theme-gold .site-header .site-title{color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+body.theme-gold .site-header .site-sub{color:#ffe55c}
+body.theme-gold .countdown-strip{background:linear-gradient(135deg,#e6a800,#ffcf00);color:#2a1f00;font-weight:800;box-shadow:0 2px 12px rgba(255,200,0,.4)}
+body.theme-gold .countdown-strip .cd-label b{color:#2a1f00}
+body.theme-gold .countdown-strip .cd-timer{background:#2a1f00;color:#ffcf00}
+body.theme-gold .tab{background:#1f1b16;border:1px solid #8a6a00;color:#f5f0e1}
+body.theme-gold .tab.active,body.theme-gold .acc-tab.active{background:linear-gradient(135deg,#3a2c00,#8a6a00);color:#ffcf00;border:2px solid #ffcf00;box-shadow:0 0 15px rgba(255,200,0,.4)}
+body.theme-gold .post-card{background:#1f1b16;border:1px solid #8a6a00;border-left:4px solid #ffcf00;box-shadow:0 3px 14px rgba(200,150,0,.2)}
+body.theme-gold .post-card:hover{box-shadow:0 8px 24px rgba(255,200,0,.35);border-color:#ffcf00}
+body.theme-gold .post-card .card-title,body.theme-gold .post-card h3{color:#fff}
+body.theme-gold .post-card .card-cat,body.theme-gold .post-cat{color:#ffcf00}
+body.theme-gold .post-card .card-date,body.theme-gold .post-date{color:#a89f81}
+body.theme-gold .acc-card{background:#1f1b16;border:2px solid #ffcf00;box-shadow:0 0 25px rgba(255,200,0,.25);color:#f5f0e1}
+body.theme-gold .acc-card h3{color:#fff}
+body.theme-gold .acc-btn{background:linear-gradient(135deg,#e6a800,#ffd700);color:#2a1f00;font-weight:800;box-shadow:0 3px 12px rgba(255,200,0,.4);border:none}
+body.theme-gold .acc-btn:hover{box-shadow:0 5px 18px rgba(255,200,0,.6)}
+body.theme-gold .streak-box{border:2px solid #ffcf00;background:linear-gradient(180deg,#2a2416,#1f1b16);box-shadow:0 0 18px rgba(255,200,0,.3)}
+body.theme-gold .streak-box .streak-num{color:#ffcf00}
+body.theme-gold .streak-box .streak-label{color:#a89f81}
+body.theme-gold .section-title{border-left-color:#ffcf00;color:#fff}
+body.theme-gold .cal-day.on{background:linear-gradient(135deg,#e6a800,#ffd700);color:#2a1f00;font-weight:800}
 body.theme-gold .tfill{background:linear-gradient(90deg,#e6a800,#ffd700)}
+body.theme-gold .live-ticker{background:#1a0000}
+body.theme-gold .acc-input,body.theme-gold input,body.theme-gold select{background:#2a2416;border:1px solid #8a6a00;color:#fff}
 
 /* Silver theme (Excel se manual) */
 body.theme-silver{--theme-primary:#6c757d;--theme-accent:#adb5bd;--theme-bg:#f8f9fa;--theme-glow:0 0 15px rgba(173,181,189,.4)}
