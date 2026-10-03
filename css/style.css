@@ -57,6 +57,12 @@ body{font-family:'Segoe UI',Arial,'Noto Sans Devanagari',sans-serif;background:v
   box-shadow:0 2px 8px rgba(255,215,0,.4);animation:cdPulse 2s infinite}
 @keyframes cdPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
 
+/* Ad slots (AdSense approval ke baad ads dikhenge) */
+.ad-slot{display:flex;justify-content:center;align-items:center;
+  min-height:90px;background:#f5f5f5;border:1px dashed #ddd;border-radius:8px;
+  margin:12px auto;max-width:728px;color:#aaa;font-size:12px}
+.ad-top{margin:0 auto;max-width:100%;border-radius:0;border-left:0;border-right:0}
+
 /* Date filter pills */
 .date-filter{display:flex;overflow-x:auto;gap:8px;padding:4px 2px 14px;-webkit-overflow-scrolling:touch}
 .date-filter::-webkit-scrollbar{height:4px}
