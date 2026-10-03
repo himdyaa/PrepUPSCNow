@@ -214,6 +214,26 @@
     const myNotes = notes[todayStr()] || [];
     const notesDone = myNotes.filter(function(n){ return n.done; }).length;
 
+    // ---- THEME SYSTEM ----
+    // Streak based: 200+ din = gold, 100+ din = platinum
+    // Excel/Sheet se manual override bhi possible (PUN_userTheme)
+    function applyTheme(){
+      const manualTheme = localStorage.getItem('PUN_userTheme'); // Excel se set hoga
+      let theme = '';
+      if(manualTheme && ['gold','platinum','silver'].includes(manualTheme)){
+        theme = manualTheme;
+      } else if(streak >= 200){
+        theme = 'gold';
+      } else if(streak >= 100){
+        theme = 'platinum';
+      }
+      document.body.className = document.body.className.replace(/theme-\w+/g, '').trim();
+      if(theme) document.body.classList.add('theme-' + theme);
+      return theme;
+    }
+    const currentTheme = applyTheme();
+    window.PUN_applyTheme = applyTheme;
+
     // mini calendar: last 30 days
     let calHtml = '<div class="cal-grid">';
     const d = new Date();
@@ -258,7 +278,7 @@
       '<div class="acc-card"><h3 class="acc-greet">👤 नमस्ते, ' + escapeHtml(me.name) + '</h3>' +
       '<p class="acc-today">📅 आज: <b>' + fmtDate(todayStr()) + '</b></p>' +
       '<div class="streak-row">' +
-        '<div class="streak-box"><div class="streak-num">🔥 ' + streak + '</div><div class="streak-label">दिन का स्ट्रीक</div></div>' +
+        '<div class="streak-box"><div class="streak-num">🔥 ' + streak + '</div><div class="streak-label">दिन का स्ट्रीक' + (currentTheme ? '<br><span class="theme-badge">' + (currentTheme==='gold'?'🥇 GOLD':currentTheme==='platinum'?'🥈 PLATINUM':'🥉 SILVER') + '</span>' : '') + '</div></div>' +
         '<div class="streak-box"><div class="streak-num">📅 ' + total + '</div><div class="streak-label">कुल visit दिन</div></div>' +
       '</div>' +
       '<div class="streak-row">' +
