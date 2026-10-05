@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
 Sitemap: https://himdyaa.github.io/PrepUPSCNow/sitemap.xml
-# pages-rebuild-probe 2026-10-05
